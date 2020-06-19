@@ -1,0 +1,216 @@
+.wrap {
+	width: 100%;
+	height: 100%;
+}
+.header {
+	width: 750px;
+	height: 420px;
+}
+.bind-img {
+	/*width: 750px;
+    height: 320px;*/
+	width: 750px;
+	height: 420px;
+}
+input {
+	border: none;
+}
+/* .swipe {
+	width: 710px;
+	height: 283px;
+	margin: -55px 20px 0px 20px;
+}
+
+.imgStyle {
+	width: 710px;
+	height: 283px;
+} */
+
+.content {
+	width: 710px;
+	height: 505px;
+	margin: 0 20px;
+	background-color: #fff;
+	border-radius: 40px;
+	position: relative;
+	top: -100px;
+	padding: 30px;
+	font-size: 30px;
+	color: #666666;
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.content ul {
+	margin: 0 auto;
+}
+
+.content ul li {
+	/*width: 640px;*/
+	height: 100px;
+	/*line-height: 102px;*/
+	border-bottom: 1px solid #dcdcdc; /* no */
+}
+
+input {
+	height: 90px;
+	font-size: 30px;
+	width: 260px;
+}
+
+.label {
+	display: inline-block;
+	width: 140px;
+	margin-left: 55px;
+	text-align: left;
+	line-height: 102px;
+}
+
+.yanz {
+	width: 150px;
+	border: 1px solid #eeeeee; /* no */
+	font-size: 20px;
+	height: 55px;
+	border-radius: 50px;
+	color: #666666;
+    vertical-align: middle;
+    margin-bottom: 11px;
+}
+
+.select {
+	border: none;
+	font-size: 30px;
+	color: #666666;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+}
+
+.sel-box {
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.btn-box {
+	width: 100%;
+	text-align: center;
+}
+.bind-btn {
+	width: 634px;
+	height: 88px;
+	background-color: #497aee;
+	margin-top: 40px;
+	border: none;
+	border-radius: 10px;
+	color: #eeeeee;
+	font-size: 36px;
+}
+.sanjiao {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+	border-top-color: #ccc;
+	cursor: pointer;
+	margin-left: 1px; /* no */
+}
+/*vant ui 库样式重写*/
+.van-nav-bar{
+    height: 80px;
+    line-height: 80px;
+}
+.van-nav-bar__title{
+    font-size: 30px;
+}
+.van-nav-bar__left, .van-nav-bar__right{
+    font-size: 30px;
+}
+.van-field__label{
+    width: 200px;
+    line-height: 90px;
+    font-size: 30px;
+}
+.van-field__value{
+    line-height: 90px;
+}
+.van-button{
+    height: 80px;
+}
+.van-button--normal{
+    font-size: 30px;
+}
+.van-field__error-message{
+    font-size: 30px;
+}
+.sc-sec .van-button--small{
+    width: 140px;
+    font-size: 20px;
+    height: 60px;
+}
+.van-toast{
+    font-size: 30px;
+}
+.van-toast--html, .van-toast--text{
+    padding: 20px;
+}
+.van-picker-column{
+    font-size: 30px;
+}
+.van-picker__cancel, .van-picker__confirm{
+    font-size: 30px;
+    padding: 0 20px;
+}
+.van-picker__toolbar{
+    height: 60px;
+}
+.van-submit-bar__bar{
+    height: 100px;
+    font-size: 35px;
+}
+.van-submit-bar__price{
+    font-size: 35px;
+}
+.van-submit-bar__price--integer{
+    font-size: 40px;
+}
+.van-submit-bar__button{
+    width: 250px;
+}
+.van-button--normal{
+    padding: 0 50px;
+}
+.van-cell{
+    /*padding: 10px 20px;*/
+    font-size: 30px;
+    line-height: 80px;
+}
+.van-cell__left-icon, .van-cell__right-icon{
+    font-size: 30px;
+    line-height: 80px;
+}
+.van-cell-group__title{
+    padding:20px 20px;
+    font-size: 30px;
+}
+.van-stepper__minus, .van-stepper__plus{
+    width: 50px;
+    height: 50px;
+}
+.van-stepper__input{
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    line-height: 30px;
+}
+.van-button--small{
+    width: 140px;
+    font-size: 20px;
+    height: 60px;
+}
+
