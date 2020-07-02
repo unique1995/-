@@ -14,4 +14,6 @@ export default{
     saveSCTyreWarranty:"/SC_ncm/saveSCTyreWarranty",
     saveSCZBYzm:"/SC_ncm/saveSCZBYzm",
     storeUserLogin:"/SC_ncm/storeUserLogin",
+	queryCGMenuByPhone:"/SC_ncm/queryCGMenuByPhone",
+	saveCGUser:"/SC_ncm/saveCGUser",
 }

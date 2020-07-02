@@ -106,4 +106,14 @@ export function storeUserLogin(param){
         data:param
     })
 }
+export function queryCGMenuByPhone(param){
+	return request({
+		url:reqUrl.queryCGMenuByPhone, method: 'post', data:param
+	})
+}
+export function saveCGUser(param){
+	return request({
+		url:reqUrl.saveCGUser, method: 'post', data:param
+	})
+}
 
