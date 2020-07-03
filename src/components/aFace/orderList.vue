@@ -5,14 +5,14 @@
 			<van-col span="16">{{title}}</van-col>
 			<van-col span="4"><van-icon name="phone-o" size="20px"/></van-col>
 		</van-row>
-		<div class="orderList">
+		<div class="orderList" >
 			<div class="store">
 				<span>美团餐厅</span>
-				<span>订单已完成</span>
+				<span>待支付</span>
 			</div>
-			<div class="meal">
-				<span>菜品数量：共一份菜品</span>
-				<span>￥18</span>
+			<div class="meal" v-for="(item,index) in list">
+				<span>菜品数量：共{{item.num}}份菜品</span>
+				<span>￥{{item.price}}</span>
 			</div>
 			<p>下单时间</p>
 		</div>
@@ -33,8 +33,8 @@
 				activeKey: 0,
 				store:"商家",
 				span:"订单已经完成",
-				title:"订单列表"
-
+				title:"订单列表",
+				list:[]
 			};
 		},
 		methods: {
@@ -42,7 +42,11 @@
 				this.$router.go(-1);
 			}
 		},
-
+		created() {
+			this.$nextTick(function(){  //不使用this.$nextTick()方法会报错
+				this.list=this.$route.query.list;
+			});
+		}
 	}
 </script>
 

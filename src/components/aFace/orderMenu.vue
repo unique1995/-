@@ -39,7 +39,7 @@
 				</van-card>
 		</div>
 	</div>
-	<van-submit-bar :price=allPrice button-text="提交订单" class="bottom" text-align="center" @submit="handelMenu"/>
+	<van-submit-bar :price=allPrice*100 button-text="提交订单" class="bottom" text-align="center"  @submit="handelMenu"/>
 	<van-dialog
 		        v-model="showMenu" show-cancel-button
 				width="260"
@@ -49,14 +49,14 @@
 			>
 		<van-form  label-width="314px">
 			<div class="name">
-				<van-icon name="user-o" size="30"/>
+				<van-icon name="user-o" size="25"/>
 				<van-field
 					v-model="name"
 					placeholder="请输入姓名"
 				/>
 			</div>
 			<div class="name">
-				<van-icon name="phone-o" size="30"/>
+				<van-icon name="phone-o" size="25"/>
 				<van-field
 					v-model="phone"
 					placeholder="请输入手机号"
@@ -64,10 +64,17 @@
 				/>
 			</div>
 			<div class="name">
-				<van-icon name="location-o" size="30"/>
+				<van-icon name="location-o" size="25"/>
 				<van-field
 					v-model="address"
 					placeholder="请输入地址"
+				/>
+			</div>
+			<div class="name">
+				<span style="width:50px;font-size:14px">备注</span>
+				<van-field
+					v-model="remark"
+					placeholder="请输入备注"
 				/>
 			</div>
 		</van-form>
@@ -92,6 +99,7 @@
 				name:"",
 				phone:"",
 				txt:"",
+				remark:"",
 				showMenu:false,
 				show:false,
 				meal:"精品凉菜",
@@ -195,31 +203,42 @@
 				}
 			},
 			changeCard(){
-				// this.$router.push("/pay");
+				let lise = []
+				lise = this.arr.map((item) => {
+					let obj = {}
+					obj.goods_id = item.id;
+					obj.goods_num = item.num;
+					return obj
+				})
+				console.log(lise)
 				let param = {
 					phone: this.phone,
 					name: this.name,
-					address: this.address
+					address: this.address,
+					order_sum:this.allPrice,
+					remark:this.remark,
+					menuList:lise
 				}
 				saveCGUser(param).then(res => {
 					console.log(res)
 				})
+				// this.$router.push({name:'orderdetail',query:{list:this.arr,phone:this.phone,address:this.address}})
+				// console.log(this.arr)
 			}
 		},
 		mounted() {
 			this.queryMenu()
 		},
 		computed:{
-			allPrice: {
-				get() {
+			allPrice() {
 					let allPrice = 0;
 					for (let item of this.list) {
 						allPrice += item.num * item.price;
 					}
-					return allPrice*100
+					return allPrice
 				}
-			}
 		},
+
 	}
 </script>
 
@@ -292,11 +311,11 @@
 .van-sidebar-item{
 	height: 80px;
 	line-height: 50px;
-	font-size: 24px;
+	font-size: 26px;
 	color: #8f8f8f;
 }
 .van-card__title{
-	font-size: 34px;
+	font-size: 28px;
 	line-height: 34px;
 }
 .but{

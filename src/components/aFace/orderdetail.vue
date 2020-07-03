@@ -1,12 +1,12 @@
 <template>
 	<div class="orderdetail">
-       
+
             <van-nav-bar :title="title"   class="title">
                 <template #left>
-                    <van-icon name="arrow-left"  color="#242424" size="20" />
+                    <van-icon name="arrow-left"  color="#242424" size="20" @click="handelMenu"/>
                 </template>
                 <template #right>
-                   <van-icon name="orders-o"  color="#242424" size="20"/>
+                   <van-icon name="orders-o"  color="#242424" size="20" @click="handelList"/>
                 </template>
             </van-nav-bar>
             <div class="orderMiddle">
@@ -14,29 +14,37 @@
                     <h1>待付款</h1>
                     <span>付款后可享受美味</span>
                 </div>
-                <div class="middle">
+                <div class="middle" v-for="(item,index) in list">
                     <van-card
-                        num="2"
-                        price="2.00"
-                     
-                        title="商品标题"
-                        thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+                        :num=item.num
+                        :price=item.price
+                        :title=item.food_name
+                        :thumb=item.img_src
                         />
                 </div>
                 <div class="orderMessage">
-                    <h1>订单信息</h1>
-                    <p>订单编号</p>
-                    <p>下单时间</p>
-                    <p>手机号</p>
-                    <p>地址</p>
+                    <h1>订单信息 <span></span></h1>
+                    <p>订单编号 <span></span></p>
+                    <p>下单时间: <span></span></p>
+                    <p>手机号: <span>{{phone}}</span></p>
+                    <p>地址: <span>{{address}}</span></p>
                 </div>
             </div>
-           
+
             <div class="bottom">
-                <van-button round type="info" color="#f8856b" size="small">取消订单</van-button>
+                <van-button round type="info" color="#f8856b" size="small" @click="handelorder">取消订单</van-button>
+				<van-dialog
+					v-model="showMenu" show-cancel-button
+					cancel-button-text="是"
+					confirm-button-text="否"
+					:title=txt
+					@cancel="handelMenu"
+				>
+				<span ></span>
+				</van-dialog>
                 <van-button round type="info"  color="#ff5f3a" size="small">立即支付</van-button>
             </div>
-       
+
     </div>
 </template>
 
@@ -46,13 +54,34 @@
 		name: "orderdetail",
 		data() {
 			return {
-				title:"订单详情"
+				title:"订单详情",
+				list:[],
+				phone:"",
+				address:"",
+				showMenu:false,
+				txt:"是否取消订单"
 			};
 		},
 		methods: {
+			handelList(){
+				this.$router.push({name:'orderList',query:{list:this.list}})
+			},
+			handelMenu(){
+				this.$router.push("/orderMenu")
+			},
+			handelorder(){
+				this.showMenu = true;
+			},
 
 		},
-
+		created() {
+			this.$nextTick(function(){  //不使用this.$nextTick()方法会报错
+				this.list=this.$route.query.list;
+				this.phone = this.$route.query.phone;
+				this.address = this.$route.query.address;
+			});
+			console.log(this.list,this.phone,this.address)
+		}
 	}
 </script>
 
@@ -72,7 +101,7 @@
 .nopay h1{
     font-size: 34px;
     line-height: 50px;
-   
+
 }
 .middle{
     min-height: 100px;
@@ -119,6 +148,8 @@
 }
 .van-card__title{
     line-height: 30px;
-    
+}
+.van-card__thumb,.van-card__num{
+	margin-right: 25px;
 }
 </style>
