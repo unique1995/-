@@ -5,7 +5,7 @@
 			<van-col span="16">{{title}}</van-col>
 			<van-col span="4"><van-icon name="phone-o" size="20px"/></van-col>
 		</van-row>
-		<div class="orderList" >
+		<div class="orderList" v-if="show">
 			<div class="store">
 				<span>美团餐厅</span>
 				<span>待支付</span>
@@ -16,7 +16,7 @@
 			</div>
 			<p>下单时间</p>
 		</div>
-
+		<h2 class="middle" v-else>暂时还没有订单哦~</h2>
 
 	</div>
 
@@ -34,7 +34,8 @@
 				store:"商家",
 				span:"订单已经完成",
 				title:"订单列表",
-				list:[]
+				list:[],
+				show:false,
 			};
 		},
 		methods: {
@@ -44,8 +45,16 @@
 		},
 		created() {
 			this.$nextTick(function(){  //不使用this.$nextTick()方法会报错
-				this.list=this.$route.query.list;
+				this.list = this.$route.query.list
 			});
+			if(this.list.length > 0){
+				this.show = true;
+			}
+			console.log(this.list)
+		},
+		mounted() {
+
+
 		}
 	}
 </script>
@@ -55,6 +64,7 @@
 	padding: 0 20px;
 	height: 100px;
 	font-size: 30px;
+
 }
 /deep/ .van-col {
 	text-align: center;
@@ -106,4 +116,10 @@
 		padding:0 20px;
 		color: #8f8f8f;
 	}
+	.middle{
+		font-size: 20px;
+		text-align: center;
+		line-height: 50px;
+	}
+
 </style>

@@ -16,4 +16,6 @@ export default{
     storeUserLogin:"/SC_ncm/storeUserLogin",
 	queryCGMenuByPhone:"/SC_ncm/queryCGMenuByPhone",
 	saveCGUser:"/SC_ncm/saveCGUser",
+	queryCGOrderById:"/SC_ncm/queryCGOrderById",
+	deleteCGOrderById:"/SC_ncm/deleteCGOrderById"
 }

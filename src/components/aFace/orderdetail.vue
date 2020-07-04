@@ -22,10 +22,10 @@
                         :thumb=item.img_src
                         />
                 </div>
-                <div class="orderMessage">
-                    <h1>订单信息 <span></span></h1>
-                    <p>订单编号 <span></span></p>
-                    <p>下单时间: <span></span></p>
+                <div class="orderMessage" >
+                    <h1>订单信息 </h1>
+                    <p>订单编号: <span>{{order_id}}</span></p>
+                    <p>下单时间: <span>{{order_addtime}}</span></p>
                     <p>手机号: <span>{{phone}}</span></p>
                     <p>地址: <span>{{address}}</span></p>
                 </div>
@@ -38,18 +38,17 @@
 					cancel-button-text="是"
 					confirm-button-text="否"
 					:title=txt
-					@cancel="handelMenu"
+					@cancel="handelmeal"
 				>
-				<span ></span>
+					<span v-html="text"></span>
 				</van-dialog>
                 <van-button round type="info"  color="#ff5f3a" size="small">立即支付</van-button>
             </div>
-
     </div>
 </template>
 
 <script>
-
+	import { queryCGOrderById,deleteCGOrderById} from "@/api/custInfo";
 	export default {
 		name: "orderdetail",
 		data() {
@@ -59,7 +58,11 @@
 				phone:"",
 				address:"",
 				showMenu:false,
-				txt:"是否取消订单"
+				txt:"是否取消订单",
+				id:"",
+				order_id:'',
+				order_addtime:"",
+				text:""
 			};
 		},
 		methods: {
@@ -67,20 +70,44 @@
 				this.$router.push({name:'orderList',query:{list:this.list}})
 			},
 			handelMenu(){
-				this.$router.push("/orderMenu")
+				this.$router.go(-1)
 			},
-			handelorder(){
-				this.showMenu = true;
+			handelmeal(){
+				let param = {
+					id:this.$route.query.id
+				}
+				deleteCGOrderById(param).then(res => {
+				console.log(res)
+				if(res.data.code==1){
+					this.text = "删除成功"
+				}
+
+			})
+	},
+	handelorder(){
+		this.showMenu = true;
 			},
 
 		},
 		created() {
 			this.$nextTick(function(){  //不使用this.$nextTick()方法会报错
-				this.list=this.$route.query.list;
+				this.list =this.$route.query.list;
 				this.phone = this.$route.query.phone;
 				this.address = this.$route.query.address;
 			});
-			console.log(this.list,this.phone,this.address)
+			let param = {
+				id:this.$route.query.id
+			}
+			queryCGOrderById(param).then(res => {
+				this.order_id=res.data.data.order_id;
+				this.order_addtime=res.data.data.order_addtime
+
+			})
+		},
+		mounted() {
+			if(this.list.length==0){
+				this.show = true
+			}
 		}
 	}
 </script>

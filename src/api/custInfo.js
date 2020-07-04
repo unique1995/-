@@ -116,4 +116,14 @@ export function saveCGUser(param){
 		url:reqUrl.saveCGUser, method: 'post', data:param
 	})
 }
+export function queryCGOrderById(param){
+	return request({
+		url:reqUrl.queryCGOrderById, method: 'post', data:param
+	})
+}
+export function deleteCGOrderById(param){
+	return request({
+		url:reqUrl.deleteCGOrderById, method: 'post', data:param
+	})
+}
 

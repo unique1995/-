@@ -5,7 +5,7 @@
 			<van-row type="flex" justify="space-between">
 						<van-col span="12"  style="display: flex;align-items: center" class="col">
 							<img src="../../assets/rest.png" alt />
-							<span class="tel">{{tel}}</span>
+<!--							<span class="tel">{{tel}}</span>-->
 						</van-col>
 						<van-col span="12" style="display: flex;justify-content: flex-end" class="col">
 							<img src="../../assets/list.png" alt  style="margin-right: 10px;" @click="handellist"/>
@@ -19,12 +19,13 @@
 	</div>
 	<div class="middle">
 		<div class="left" ref="menuWrapper">
-			<van-sidebar v-model="activeKey" @change="onChange" >
-				<van-sidebar-item :title=item.name v-for="(item,index) in arrList"  />
+			<van-sidebar v-model="activeKey">
+				<van-sidebar-item :title=item.name v-for="(item,index) in arrList" :class="{active : Index == 1}" @click="changeNav(index)" />
 			</van-sidebar>
 		</div>
 		<div class="right" ref="foodsWrapper">
-				<p>精品草才</p>
+			<div  v-if="Index == 0">
+				<p>精品凉菜</p>
 				<van-card
 					v-for="(item,index) in arr"
 					:price="item.price"
@@ -37,6 +38,22 @@
 						<van-stepper v-model="item.num" theme="round"  @plus="add(item)" @minus="del(item)" min="0"/>
 					</template>
 				</van-card>
+			</div>
+			<div v-if="Index == 1">
+				<p>忽悠面</p>
+				<van-card
+					v-for="(item,index) in arr"
+					:price="item.price"
+					:title="item.food_name"
+					:thumb="item.img_src"
+					:key="index"
+					thumb-mode="widthFix"
+				>
+					<template #footer>
+						<van-stepper v-model="item.num" theme="round"  @plus="add(item)" @minus="del(item)" min="0"/>
+					</template>
+				</van-card>
+			</div>
 		</div>
 	</div>
 	<van-submit-bar :price=allPrice*100 button-text="提交订单" class="bottom" text-align="center"  @submit="handelMenu"/>
@@ -53,6 +70,7 @@
 				<van-field
 					v-model="name"
 					placeholder="请输入姓名"
+					@blur="handelname"
 				/>
 			</div>
 			<div class="name">
@@ -89,13 +107,12 @@
         name: "orderMenu",
 		data() {
 			return {
-				tel:15534051204,
-				num:0,
 				badge:0,
 				activeKey: 0,
 				bool:false,
 				badge:"",
 				address:"",
+				Index:0,
 				name:"",
 				phone:"",
 				txt:"",
@@ -104,10 +121,6 @@
 				show:false,
 				meal:"精品凉菜",
 				arr:[],
-				items: [
-					{ text: '浙江', },
-					{ text: '江苏', },
-				],
 				arrList:[
 					{
 						name:"精品凉菜",
@@ -125,34 +138,22 @@
 						id:4
 					}
 				],
-				list:
-					[
-						// {
-						// 	p:"精品凉菜",
-						// 	title:"商品1",
-						// 	thumb:"https://img.yzcdn.cn/vant/ipad.jpeg",
-						// 	price:"1",
-						// 	num:0,
-						// 	bool:true
-						// },
-						//
-						// {
-						// 	p:"特色炒菜",
-						// 	title:"商品1",
-						// 	thumb:"https://img.yzcdn.cn/vant/ipad.jpeg",
-						// 	price:"1",
-						// 	num:0,
-						// 	bool:true
-						// },
-					],
+				list: [],
+
 			};
 		},
 		methods: {
-			onChange(index) {
-				console.log(index)
+			changeNav(index){
+				if(index == 1){
+					this.Index = 1;
+				}else if(index == 2){
+					this.Index = 2;
+				}else if(index == 3){
+					this.Index = 3
+				}
 			},
 			search(){
-				this.$router.push("/search")
+				console.log("111")
 			},
 			handellist(){
 					this.$router.push("/orderList")
@@ -174,7 +175,7 @@
 				this.showMenu= true;
 			},
 			queryMenu(){
-				// let restaurant_id = sessionStorage.getItem("restaurant_id");
+				let restaurant_id = sessionStorage.getItem("restaurant_id");
 				let param = {
 					food_name:"",
 					food_type:"",
@@ -187,27 +188,41 @@
 							item.img_src="/static/menuImg/"+item.img_src
 							return item;
 						})
-						console.log(this.list)
+						console.log(this.arr)
 					}
-					// console.log(res)
 				})
 			},
 			valid() {
 				if (!(/^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(this.phone))) {
-					/*this.text = "请输入正确的手机号！"
-                    this.show8 = true;*/
-					this.text = "请输入正确的手机号！"
-
+					// this.text = "请输入正确的手机号！"
+					this.$toast('请输入正确的手机号');
 					this.phone = "";
 					return false;
 				}
 			},
+			handelname(){
+
+			}
+			,
 			changeCard(){
+				if(this.name == ''){
+					this.$toast("用户名不能为空");
+					return false;
+				}
+				if(this.phone == ''){
+					this.$toast("手机号不能为空");
+					return false;
+				}
+				if(this.address == ''){
+					this.$toast("地址不能为空");
+					return false;
+				}
 				let lise = []
 				lise = this.arr.map((item) => {
 					let obj = {}
 					obj.goods_id = item.id;
 					obj.goods_num = item.num;
+					obj.goods_price = item.price
 					return obj
 				})
 				console.log(lise)
@@ -217,12 +232,16 @@
 					address: this.address,
 					order_sum:this.allPrice,
 					remark:this.remark,
+					restaurant_id:"SCNC2006240947147163090249",
 					menuList:lise
 				}
 				saveCGUser(param).then(res => {
-					console.log(res)
+					// console.log(res)
+					if(res.data.code==1){
+						this.$router.push({name:'orderdetail',query:{list:this.arr,phone:this.phone,address:this.address,id:res.data.id}})
+					}
 				})
-				// this.$router.push({name:'orderdetail',query:{list:this.arr,phone:this.phone,address:this.address}})
+
 				// console.log(this.arr)
 			}
 		},
@@ -238,7 +257,9 @@
 					return allPrice
 				}
 		},
-
+		created() {
+			let restaurant_id = sessionStorage.setItem("restaurant_id",this.restaurant_id)
+		}
 	}
 </script>
 
@@ -313,6 +334,7 @@
 	line-height: 50px;
 	font-size: 26px;
 	color: #8f8f8f;
+	text-align: center;
 }
 .van-card__title{
 	font-size: 28px;

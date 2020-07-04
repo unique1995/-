@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
 		'/SC_ncm': {
-			target: 'http://192.168.0.120:8080/',  //目标接口域名
+			target: 'http://192.168.0.100:8080/',  //目标接口域名
 			changeOrigin: true,  //是否跨域
 			pathRewrite: {
 				//'^/SC_ncm': '/SC_ncm'   //重写接口
