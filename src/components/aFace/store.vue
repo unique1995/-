@@ -10,13 +10,13 @@
 			</div>
 			<div>
 				<h1>商家信息</h1>
-				<p><van-icon name="location-o" />{{storeMessage}}</p>
-				<p><van-icon name="phone-o" />{{tel}}</p>
+				<p><van-icon name="location-o" />{{address}}</p>
+				<p><van-icon name="phone-o" />{{owner_phone}}</p>
 
 			</div>
 			<div>
 				<h1>营业时间</h1>
-				<p>午市：09:00-15:00;  夜市：15:00-00:00;</p>
+				<p>{{business_hours}}</p>
 			</div>
 		</div>
 	</div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+	import { queryCGRestaurantInformationById} from "@/api/custInfo";
 
 	export default {
 		name: "orderMenu",
@@ -32,14 +33,26 @@
 			return {
 				title:"支付页",
 				money:"￥90",
-				storeMessage:"小店区晋阳街体育路北美金棕榈往北100米",
-				tel:"1234556789"
+				address:"",
+				owner_phone:"",
+				business_hours:""
 			};
 		},
 		methods: {
 
 		},
-
+		mounted() {
+			let restaurant_id = sessionStorage.getItem("restaurant_id");
+			let param = {
+				id:restaurant_id,
+			}
+			queryCGRestaurantInformationById(param).then(res => {
+				let message = res.data.data;
+				this.address = message.address;
+				this.business_hours = message.business_hours;
+				this.owner_phone = message.owner_phone
+			})
+		}
 	}
 </script>
 
@@ -62,7 +75,7 @@
 	}
 	.store h1{
 		font-size: 34px;
-		font-size: 600;
+		font-weight: 600;
 		line-height: 50px;
 		margin-bottom:10px;
 	}

@@ -17,5 +17,6 @@ export default{
 	queryCGMenuByPhone:"/SC_ncm/queryCGMenuByPhone",
 	saveCGUser:"/SC_ncm/saveCGUser",
 	queryCGOrderById:"/SC_ncm/queryCGOrderById",
-	deleteCGOrderById:"/SC_ncm/deleteCGOrderById"
+	deleteCGOrderById:"/SC_ncm/deleteCGOrderById",
+	queryCGRestaurantInformationById:"/SC_ncm/queryCGRestaurantInformationById"
 }

@@ -24,7 +24,7 @@ export default new Router({
     routes: [
 		{
 			path:'/',           //这个表示的是根目录，即一进入的页面
-			redirect:'orderLogin'    //设置页面一进来就显示的页面，这里写的内容是对应组将的component的值
+			redirect:'orderMenu'    //设置页面一进来就显示的页面，这里写的内容是对应组将的component的值
 		},
         // {
         //     path: '/aIndex',
@@ -36,15 +36,15 @@ export default new Router({
 		// 	name: 'sideB',
 		// 	component: sideB,
 		// },
-		{
-			path: '/orderLogin',
-			name: 'orderLogin',
-			component: orderLogin,
-			meta:{
-				title:"开始点餐",
-				isLogin:false    // 添加该字段，表示进入这个路由是需要登录的
-			},
-		},
+		// {
+		// 	path: '/orderLogin',
+		// 	name: 'orderLogin',
+		// 	component: orderLogin,
+		// 	meta:{
+		// 		title:"开始点餐",
+		// 		isLogin:false    // 添加该字段，表示进入这个路由是需要登录的
+		// 	},
+		// },
 		{
 			path: '/orderMenu',
 			name: 'orderMenu',

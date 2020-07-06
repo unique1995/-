@@ -126,4 +126,9 @@ export function deleteCGOrderById(param){
 		url:reqUrl.deleteCGOrderById, method: 'post', data:param
 	})
 }
-
+queryCGRestaurantInformationById
+export function queryCGRestaurantInformationById(param){
+	return request({
+		url:reqUrl.queryCGRestaurantInformationById, method: 'post', data:param
+	})
+}

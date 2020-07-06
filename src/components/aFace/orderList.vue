@@ -10,11 +10,11 @@
 				<span>美团餐厅</span>
 				<span>待支付</span>
 			</div>
-			<div class="meal" v-for="(item,index) in list">
+			<div class="meal" v-for="(item,index) in arr">
 				<span>菜品数量：共{{item.num}}份菜品</span>
 				<span>￥{{item.price}}</span>
 			</div>
-			<p>下单时间</p>
+			<p>下单时间: {{order_addtime}}</p>
 		</div>
 		<h2 class="middle" v-else>暂时还没有订单哦~</h2>
 
@@ -35,7 +35,9 @@
 				span:"订单已经完成",
 				title:"订单列表",
 				list:[],
-				show:false,
+				arr:[],
+				show:true,
+				order_addtime:""
 			};
 		},
 		methods: {
@@ -45,10 +47,17 @@
 		},
 		created() {
 			this.$nextTick(function(){  //不使用this.$nextTick()方法会报错
-				this.list = this.$route.query.list
+				this.order_addtime=this.$route.query.order_addtime;
 			});
-			if(this.list.length > 0){
-				this.show = true;
+			this.list =JSON.parse(sessionStorage.getItem("list"));
+			this.list && this.list.map((item)=>{
+				if(item.num !== 0){
+					this.arr.push(item)
+				}
+				return this.arr
+			})
+			if(this.list == null){
+				this.show = false
 			}
 			console.log(this.list)
 		},

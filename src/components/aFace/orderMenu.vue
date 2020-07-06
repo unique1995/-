@@ -143,8 +143,10 @@
 			};
 		},
 		methods: {
-			changeNav(index){
-				if(index == 1){
+			changeNav(index) {
+				if(index == 0) {
+					this.Index = 0;
+				}else if(index == 1){
 					this.Index = 1;
 				}else if(index == 2){
 					this.Index = 2;
@@ -160,6 +162,7 @@
 			},
 			 add(item) {
 				 item.num++;
+				 console.log(item.num)
 			},
 			del(item){
 				if(item.num === 0){
@@ -185,10 +188,11 @@
 					if(res.data.code == 1){
 						this.list = res.data.data;
 						this.arr = this.list.map((item)=>{
-							item.img_src="/static/menuImg/"+item.img_src
+							item.img_src="/static/menuImg/"+item.img_src;
 							return item;
 						})
-						console.log(this.arr)
+						//console.log( this.arr)
+
 					}
 				})
 			},
@@ -205,6 +209,10 @@
 			}
 			,
 			changeCard(){
+				if(this.name == '' && this.phone == ''&& this.address == ''  ){
+					this.$toast("不能为空");
+					return false;
+				}
 				if(this.name == ''){
 					this.$toast("用户名不能为空");
 					return false;
@@ -217,6 +225,7 @@
 					this.$toast("地址不能为空");
 					return false;
 				}
+
 				let lise = []
 				lise = this.arr.map((item) => {
 					let obj = {}
@@ -236,9 +245,9 @@
 					menuList:lise
 				}
 				saveCGUser(param).then(res => {
-					// console.log(res)
 					if(res.data.code==1){
-						this.$router.push({name:'orderdetail',query:{list:this.arr,phone:this.phone,address:this.address,id:res.data.id}})
+						this.$router.push({name:'orderdetail',query:{list:this.arr,phone:this.phone,address:this.address,id:res.data.id}});
+						this.list = sessionStorage.setItem("list",JSON.stringify(this.arr))
 					}
 				})
 
@@ -251,15 +260,27 @@
 		computed:{
 			allPrice() {
 					let allPrice = 0;
-					for (let item of this.list) {
+					for (let item of this.arr) {
 						allPrice += item.num * item.price;
 					}
 					return allPrice
 				}
 		},
 		created() {
-			let restaurant_id = sessionStorage.setItem("restaurant_id",this.restaurant_id)
+			let restaurant_id = sessionStorage.setItem("restaurant_id","SCNC2006240947147163090249");
+
 		}
+		// created() {
+		// 	let str = window.location.href;
+		// 	let arr = str.match(/=(.*)$/);
+		// 	if(arr && arr.length > 0){
+		// 		this.restaurant_id = arr[1];
+		// 		let restaurant_id = sessionStorage.setItem("restaurant_id",this.restaurant_id)
+		// 		this.qryGgtu();
+		// 		this.qryBind();
+		// 	}
+		//
+		// },
 	}
 </script>
 
